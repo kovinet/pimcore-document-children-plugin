@@ -16,41 +16,34 @@ pimcore.plugin.documentChildrenGrid.settings = Class.create({
         this.item = item;
     },
 
-    getStore: function (id) {
-        this.store = new Ext.data.JsonStore({
-            // store configs
-            storeId: 'documentChildrenStore',
-
-            proxy: {
-                type: 'ajax',
-                url: '',
-                reader: {
-                    type: 'json',
-                    rootProperty: 'dacoments'
-                }
-            },
-
-            //alternatively, a Model name can be given (see Ext.data.Store for an example)
-            fields: [{name: 'id', type: 'int'}, 'title', 'url', {name:'date', type:'date'}]
-        });
-    },
-
     getLayout: function()
     {
+        if (this.layout == null) {
 
-        if (this.grid == null) {
+            this.store = Ext.data.JsonStore({
+                autoDestroy: true,
+                storeId: 'documentChildrenStore',
+                proxy: {
+                    type: 'ajax',
+                    url: '/plugins/document-children-grid/index/get',
+                    extraParams: {
+                        id: this.item.id
+                    },
+                    reader: {
+                        type: 'json',
+                        rootProperty: 'dacoments'
+                    }
+                },
+                fields: [{name: 'id', type: 'int'}, 'title', 'url', {name:'date', type:'date'}]
+            });
 
-            this.gridName = "documentSemantics_grid_" + this.item.id;
-
-            this.framePanel = Ext.create('Ext.grid.Panel', {
-                //title: 'Children',
-                //region: "center",
-                //layout: "fit",
-                store: this.getStore(this.item.id),
+            //this.gridName = "documentSemantics_grid_" + this.item.id;
+            this.gridPanel = Ext.create('Ext.grid.Panel', {
+                //title: 'Children', //no need
+                store: this.store,
                 columns: [
-                    { text: 'Name',  dataIndex: 'name', width: 200 },
-                    { text: 'Email', dataIndex: 'email', width: 250 },
-                    { text: 'Phone', dataIndex: 'phone', width: 120 }
+                    { text: 'Title',  dataIndex: 'name', width: 200 },
+                    { text: 'Date', dataIndex: 'email', width: 250 }
                 ],
                 listeners: {
                     rowdblclick: function(grid, record, tr, rowIndex, e, eOpts ) {
@@ -61,23 +54,21 @@ pimcore.plugin.documentChildrenGrid.settings = Class.create({
 
                     }.bind(this)
                 }
-                //bodyStyle: "-webkit-overflow-scrolling:touch; background:#323232;",
-
             });
 
-            this.grid = new Ext.Panel({
+            this.layout = new Ext.Panel({
                 title: "Children Grid",
                 border: false,
                 layout: "fit",
                 autoScroll: true,
                 closeable: false,
-                iconCls: "semantics_icon_documentSemantics",
-                items: [this.framePanel]
+                iconCls: "pimcore_icon_search",
+                items: [this.gridPanel]
             });
 
         }
 
-        return this.grid;
+        return this.layout;
     },
 
     onClose: function () {
