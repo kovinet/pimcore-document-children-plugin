@@ -14,7 +14,6 @@ namespace DocumentChildrenGrid\Controller\Plugin;
 
 use Pimcore\Tool;
 use Pimcore\Model\Document;
-use Semantics\Model\DocumentSemantic;
 
 class DocumentChildrenGrid extends \Zend_Controller_Plugin_Abstract
 {

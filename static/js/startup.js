@@ -12,7 +12,7 @@ pimcore.registerNS("pimcore.plugin.documentChildrenGrid");
 
 pimcore.plugin.documentChildrenGrid = Class.create(pimcore.plugin.admin, {
 
-    documentSemanticsTabs: {
+    documentChildrenTabs: {
         docs: {}
     },
 
@@ -33,10 +33,11 @@ pimcore.plugin.documentChildrenGrid = Class.create(pimcore.plugin.admin, {
 
     postOpenDocument: function(doc)
     {
-        var semanticsPanel = new pimcore.plugin.documentChildrenGrid.settings(doc);
-        doc.tabbar.add(semanticsPanel.getLayout());
+        var childrenPanel = new pimcore.plugin.documentChildrenGrid.settings(doc);
+        doc.tabbar.add(childrenPanel.getLayout());
 
-        this.documentSemanticsTabs.docs[doc.id] = semanticsPanel;
+        this.documentChildrenTabs.docs[doc.id] = childrenPanel;
+        //childrenPanel.reload();
     }
 
 });

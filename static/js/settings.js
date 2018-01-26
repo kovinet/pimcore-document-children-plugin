@@ -22,34 +22,42 @@ pimcore.plugin.documentChildrenGrid.settings = Class.create({
 
             this.store = Ext.data.JsonStore({
                 autoDestroy: true,
+                autoLoad: true,
                 storeId: 'documentChildrenStore',
                 proxy: {
                     type: 'ajax',
-                    url: '/plugins/document-children-grid/index/get',
+                    url: '/plugin/DocumentChildrenGrid/index/get',
                     extraParams: {
-                        id: this.item.id
+                        documentId: this.item.id
                     },
                     reader: {
                         type: 'json',
-                        rootProperty: 'dacoments'
+                        rootProperty: 'documents'
                     }
                 },
                 fields: [{name: 'id', type: 'int'}, 'title', 'url', {name:'date', type:'date'}]
             });
+
+            console.log('inited store');
 
             //this.gridName = "documentSemantics_grid_" + this.item.id;
             this.gridPanel = Ext.create('Ext.grid.Panel', {
                 //title: 'Children', //no need
                 store: this.store,
                 columns: [
-                    { text: 'Title',  dataIndex: 'name', width: 200 },
-                    { text: 'Date', dataIndex: 'email', width: 250 }
+                    { text: 'Title',  dataIndex: 'title', width: 400 },
+                    { text: 'Date', dataIndex: 'date', width: 100 }
                 ],
                 listeners: {
                     rowdblclick: function(grid, record, tr, rowIndex, e, eOpts ) {
+                        console.log('record', record);
+                        console.log('tr', tr);
+                        console.log('rowIndex', rowIndex);
+                        console.log('e', e);
+
                         //var data = this.store.getAt(rowIndex);
                         console.log('data');
-                        pimcore.helpers.openDocument(2, 'page');
+                        pimcore.helpers.openDocument(record.id, 'page');
                         console.log(pimcore);
 
                     }.bind(this)
@@ -69,6 +77,10 @@ pimcore.plugin.documentChildrenGrid.settings = Class.create({
         }
 
         return this.layout;
+    },
+
+    reload: function () {
+        this.store.reload();
     },
 
     onClose: function () {

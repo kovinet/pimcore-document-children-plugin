@@ -35,6 +35,8 @@ class DocumentChildrenGrid_IndexController extends \Pimcore\Controller\Action\Ad
     {
         parent::preDispatch();
 
+        $this->disableViewAutoRender();
+
         $this->documentId  = (int) $this->getParam('documentId', 0);
         $this->document = Document::getById($this->documentId);
 
@@ -43,15 +45,33 @@ class DocumentChildrenGrid_IndexController extends \Pimcore\Controller\Action\Ad
         }
 
 
+
     }
 
     /**
-     * Sets the tags given an item and type
+     * Output document children in JSON
      */
     public function getAction()
     {
 
-        echo "Hello world";
+        $list = new Document\Listing();
+        $list->setCondition('parentId = ? AND `type` = "page"', $this->documentId);
+
+        $children = [];
+        foreach ($list as $item) {
+            $dateEl = $item->getElement('date');
+            $date = null;
+            if ($dateEl) {
+                $date = $dateEl->getData()->format('Y-m-d');
+            }
+            $children[] = [
+                'id' => $item->getId(),
+                'title' => $item->getTitle(),
+                'date' => $date
+            ];
+        }
+
+        echo json_encode(['documents' => $children]);
 
     }
 
