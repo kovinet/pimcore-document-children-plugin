@@ -4,4 +4,6 @@ CMS Documents with alot of children. Grid can be extended do display additional 
 
 In current version it is not configurable which editables are shown in the grid. 
 
- 
+Compatibility: 
+    Pimcore 4
+    

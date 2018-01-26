@@ -20,9 +20,9 @@ pimcore.plugin.documentChildrenGrid.settings = Class.create({
     {
         if (this.layout == null) {
 
-            this.store = Ext.data.JsonStore({
+            this.store = new Ext.data.JsonStore({
                 autoDestroy: true,
-                autoLoad: true,
+                //autoLoad: true,
                 storeId: 'documentChildrenStore',
                 proxy: {
                     type: 'ajax',
@@ -64,6 +64,10 @@ pimcore.plugin.documentChildrenGrid.settings = Class.create({
                 }
             });
 
+            this.gridPanel.on("beforerender", function () {
+                this.store.load();
+            }.bind(this));
+
             this.layout = new Ext.Panel({
                 title: "Children Grid",
                 border: false,
@@ -80,7 +84,7 @@ pimcore.plugin.documentChildrenGrid.settings = Class.create({
     },
 
     reload: function () {
-        this.store.reload();
+        this.store.load();
     },
 
     onClose: function () {
