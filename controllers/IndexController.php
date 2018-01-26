@@ -6,15 +6,14 @@
  * For the full copyright and license information, please view the LICENSE.md
  * file distributed with this source code.
  *
- * @copyright  Copyright (c) 2014-2016 Gather Digital Ltd (https://www.gatherdigital.co.uk)
- * @license    https://www.gatherdigital.co.uk/license     GNU General Public License version 3 (GPLv3)
+ * @copyright  Copyright (c) KoviNET, Borut Kovačec s.p. (http://kovinet.eu)
+ * @license    https://kovinet.eu/license     GNU General Public License version 3 (GPLv3)
  */
 
 use Pimcore\Model\Document;
 
 class DocumentChildrenGrid_IndexController extends \Pimcore\Controller\Action\Admin
 {
-
     /**
      * @var int $documentId
      */
@@ -24,9 +23,6 @@ class DocumentChildrenGrid_IndexController extends \Pimcore\Controller\Action\Ad
      * @var Document $document
      */
     protected $document;
-
-
-
 
     /**
      * Handle the item
@@ -43,9 +39,6 @@ class DocumentChildrenGrid_IndexController extends \Pimcore\Controller\Action\Ad
         if (!$this->document) {
             throw new \Exception('Document was not found');
         }
-
-
-
     }
 
     /**
@@ -53,15 +46,23 @@ class DocumentChildrenGrid_IndexController extends \Pimcore\Controller\Action\Ad
      */
     public function getAction()
     {
+        $isAdmin = \Pimcore\Tool\Authentication::authenticateSession();
+
+        //only alow if valid admin session active
+        if (!$isAdmin) {
+            throw new \Exception('Login required');
+        }
 
         $list = new Document\Listing();
         $list->setCondition('parentId = ? AND `type` = "page"', $this->documentId);
+        $list->setOrderKey('index');
+        $list->setOrder('asc');
 
         $children = [];
         foreach ($list as $item) {
             $dateEl = $item->getElement('date');
             $date = null;
-            if ($dateEl) {
+            if ($dateEl && ($data = $dateEl->getData()) && $data instanceof \Carbon\Carbon) {
                 $date = $dateEl->getData()->format('Y-m-d');
             }
             $children[] = [
