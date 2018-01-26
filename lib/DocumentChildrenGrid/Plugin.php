@@ -7,8 +7,8 @@
  * For the full copyright and license information, please view the LICENSE.md
  * file distributed with this source code.
  *
- * @copyright  Copyright (c) 2014-2016 Gather Digital Ltd (https://www.gatherdigital.co.uk)
- * @license    https://www.gatherdigital.co.uk/license     GNU General Public License version 3 (GPLv3)
+ * @copyright  Copyright (c) KoviNET, Borut Kovačec s.p. (http://kovinet.eu)
+ * @license    https://kovinet.eu/license     GNU General Public License version 3 (GPLv3)
  */
 
 namespace DocumentChildrenGrid;
@@ -25,8 +25,6 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
         if (!self::isInstalled()) {
             return;
         }
-
-        \Pimcore::getEventManager()->attach("system.startup", ["\\Semantics\\Model\\DocumentSemantic\\Service", "initControllerPlugin"]);
     }
 
     public static function install()
@@ -43,7 +41,7 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
 
     public static function isInstalled()
     {
-        //check the table it present
+        //@todo implement!
         return true;
     }
 

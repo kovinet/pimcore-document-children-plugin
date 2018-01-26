@@ -5,8 +5,8 @@
  * For the full copyright and license information, please view the LICENSE.md
  * file distributed with this source code.
  *
- * @copyright  Copyright (c) 2014-2016 Gather Digital Ltd (https://www.gatherdigital.co.uk)
- * @license    https://www.gatherdigital.co.uk/license     GNU General Public License version 3 (GPLv3)
+ * @copyright  Copyright (c) Kovinet, Borut Kovačec s.p. (https://kovinet.eu)
+ * @license    https://kovinet.eu/license     GNU General Public License version 3 (GPLv3)
  */
 pimcore.registerNS("pimcore.plugin.documentChildrenGrid.settings");
 pimcore.plugin.documentChildrenGrid.settings = Class.create({
@@ -35,31 +35,20 @@ pimcore.plugin.documentChildrenGrid.settings = Class.create({
                         rootProperty: 'documents'
                     }
                 },
-                fields: [{name: 'id', type: 'int'}, 'title', 'url', {name:'date', type:'date'}]
+                fields: [{name: 'id', type: 'int'}, 'title', 'url', {name:'date', type:'date', format:''}]
             });
-
-            console.log('inited store');
 
             //this.gridName = "documentSemantics_grid_" + this.item.id;
             this.gridPanel = Ext.create('Ext.grid.Panel', {
                 //title: 'Children', //no need
                 store: this.store,
                 columns: [
-                    { text: 'Title',  dataIndex: 'title', width: 400 },
+                    { text: 'Title',  dataIndex: 'title', width: 600 },
                     { text: 'Date', dataIndex: 'date', width: 100 }
                 ],
                 listeners: {
                     rowdblclick: function(grid, record, tr, rowIndex, e, eOpts ) {
-                        console.log('record', record);
-                        console.log('tr', tr);
-                        console.log('rowIndex', rowIndex);
-                        console.log('e', e);
-
-                        //var data = this.store.getAt(rowIndex);
-                        console.log('data');
                         pimcore.helpers.openDocument(record.id, 'page');
-                        console.log(pimcore);
-
                     }.bind(this)
                 }
             });
@@ -77,7 +66,6 @@ pimcore.plugin.documentChildrenGrid.settings = Class.create({
                 iconCls: "pimcore_icon_search",
                 items: [this.gridPanel]
             });
-
         }
 
         return this.layout;
@@ -85,12 +73,6 @@ pimcore.plugin.documentChildrenGrid.settings = Class.create({
 
     reload: function () {
         this.store.load();
-    },
-
-    onClose: function () {
-        try {
-
-        } catch (e) { }
     }
 
 });

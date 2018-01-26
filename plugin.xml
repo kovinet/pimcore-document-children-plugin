@@ -33,9 +33,5 @@
             <path>/plugins/DocumentChildrenGrid/static/js/settings.js</path>
         </pluginJsPaths>
 
-        <!-- css files with path relative to plugin-directory -->
-        <pluginCssPaths>
-            <path>/plugins/DocumentChildrenGrid/static/css/document-semantics.css</path>
-        </pluginCssPaths>
     </plugin>
 </zend-config>

@@ -6,7 +6,7 @@
  * file distributed with this source code.
  *
  * @copyright  Copyright (c) Kovinet, Borut Kovačec s.p. (https://kovinet.eu)
- * @license    https://www.gatherdigital.co.uk/license     GNU General Public License version 3 (GPLv3)
+ * @license    https://kovinet.eu/license     GNU General Public License version 3 (GPLv3)
  */
 pimcore.registerNS("pimcore.plugin.documentChildrenGrid");
 
