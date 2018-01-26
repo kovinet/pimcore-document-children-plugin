@@ -35,7 +35,7 @@ pimcore.plugin.documentChildrenGrid.settings = Class.create({
                         rootProperty: 'documents'
                     }
                 },
-                fields: [{name: 'id', type: 'int'}, 'title', 'url', {name:'date', type:'date', format:''}]
+                fields: [{name: 'id', type: 'int'}, 'title', 'url', {name:'date', type:'date'}]
             });
 
             //this.gridName = "documentSemantics_grid_" + this.item.id;
@@ -43,8 +43,16 @@ pimcore.plugin.documentChildrenGrid.settings = Class.create({
                 //title: 'Children', //no need
                 store: this.store,
                 columns: [
+                    { text: 'ID',  dataIndex: 'id'},
                     { text: 'Title',  dataIndex: 'title', width: 600 },
-                    { text: 'Date', dataIndex: 'date', width: 100 }
+                    { text: 'Date', dataIndex: 'date', renderer: function(d) {
+                            if (d != null){
+                                var date = new Date(d);
+                                return Ext.Date.format(date, "d.m.Y");
+                            }
+                            return d;
+                        }
+                    }
                 ],
                 listeners: {
                     rowdblclick: function(grid, record, tr, rowIndex, e, eOpts ) {

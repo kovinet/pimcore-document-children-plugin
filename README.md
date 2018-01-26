@@ -11,3 +11,6 @@ Compatibility:
 
 Insiperd by (basic structure):
 https://github.com/gatherdigitaluk/pimcore-plugin-semantics    
+
+
+![Screenshot](https://kovinet.eu/github-images/document-children-plugin.png)
