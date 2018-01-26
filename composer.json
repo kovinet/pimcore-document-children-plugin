@@ -1,5 +1,5 @@
 {
-    "name": "kovinet/semantics",
+    "name": "kovinet/pimcore-document-children-plugin",
     "description": "Provides additional tab for Documents displaying children grid",
     "type": "pimcore-plugin",
     "license": "GPL-3.0+",
